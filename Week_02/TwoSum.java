@@ -1,5 +1,9 @@
 package Week_02;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 1. 两数之和
  * <p>
@@ -21,16 +25,73 @@ public class TwoSum {
         TwoSum instance = new TwoSum();
         int[] nums = new int[]{2, 7, 11, 15};
         int target = 9;
-        System.out.println(instance.twoSum(nums, target));
+        System.out.println(Arrays.toString(instance.twoSum(nums, target)));
     }
 
     /**
-     * TODO
+     * 利用hash表存储（差值,差值索引），一次遍历数组完成。
+     * <p>
+     * 时间复杂度O(n),空间复杂度O(n)
+     * <p>
+     * 执行用时：2 ms, 在所有 Java 提交中击败了99.60%的用户
+     * 内存消耗：38.9 MB, 在所有 Java 提交中击败了65.08%的用户
+     *
      * @param nums
      * @param target
      * @return
      */
     public int[] twoSum(int[] nums, int target) {
-        return null;
+        int[] result = null;
+        if (nums == null || nums.length <= 1) {
+            return null;
+        }
+        Map<Integer, Integer> numMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int subNum = target - nums[i];
+            if (numMap.containsKey(subNum)) {
+                result = new int[]{numMap.get(subNum), i};
+                break;
+            }
+            numMap.put(nums[i], i);
+        }
+        return result;
+    }
+
+    /**
+     * 注意与确认题意：
+     * 1. 只会对应一个答案，但是同一个元素不能使用两遍。
+     * 2. 返回的是数组的下标
+     * <p>
+     * 解决方案：
+     * 1. 先遍历将所有值放入hash表<num, index> => 遍历时间复杂度 O(n), 哈希表空间复杂度O(n)
+     * 2. 再次遍历所有值，每次从hash表中获取是否有(target-num)的key。 => 查找空间复杂度O(1)，遍历空间复杂度O(n)
+     * <p>
+     * 复杂度分析：
+     * 时间复杂度O(n), 空间复杂度O(n)
+     * <p>
+     * 可优化方案：
+     * 可以只遍历一遍数组即可
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum1(int[] nums, int target) {
+        int[] result = null;
+        if (nums == null || nums.length <= 1) {
+            return result;
+        }
+        Map<Integer, Integer> numMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            numMap.put(nums[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int num = target - nums[i];
+            if (numMap.containsKey(num) && numMap.get(num) != i) {
+                result = new int[]{numMap.get(num), i};
+                break;
+            }
+        }
+        return result;
     }
 }
