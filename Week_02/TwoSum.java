@@ -21,13 +21,6 @@ import java.util.Map;
  */
 public class TwoSum {
 
-    public static void main(String[] args) {
-        TwoSum instance = new TwoSum();
-        int[] nums = new int[]{2, 7, 11, 15};
-        int target = 9;
-        System.out.println(Arrays.toString(instance.twoSum(nums, target)));
-    }
-
     /**
      * 利用hash表存储（差值,差值索引），一次遍历数组完成。
      * <p>
@@ -35,6 +28,10 @@ public class TwoSum {
      * <p>
      * 执行用时：2 ms, 在所有 Java 提交中击败了99.60%的用户
      * 内存消耗：38.9 MB, 在所有 Java 提交中击败了65.08%的用户
+     * <p>
+     * 注意事项：
+     * 1. key为差值
+     * 2. 数组中元素的排序，最好小下标在前。
      *
      * @param nums
      * @param target
@@ -93,5 +90,12 @@ public class TwoSum {
             }
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        TwoSum instance = new TwoSum();
+        int[] nums = new int[]{2, 7, 11, 15};
+        int target = 9;
+        System.out.println(Arrays.toString(instance.twoSum(nums, target)));
     }
 }
